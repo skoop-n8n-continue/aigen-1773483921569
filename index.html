@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Westfield Grand Mall — Wayfinding</title>
+  <link rel="stylesheet" href="styles.css?v=x9p3q7">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header id="header">
+      <div class="header-left">
+        <div class="mall-logo">
+          <div class="logo-icon">W</div>
+          <div class="logo-text">
+            <span class="logo-name">Westfield Grand</span>
+            <span class="logo-sub">Shopping Center</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-center">
+        <div class="search-container">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search stores, restaurants, services..." autocomplete="off">
+          <button id="clearSearch" class="clear-btn" style="display:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div id="searchResults" class="search-results" style="display:none"></div>
+      </div>
+      <div class="header-right">
+        <div class="kiosk-location">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <div>
+            <span class="you-are-here">You are here</span>
+            <span class="kiosk-name">Main Entrance — Level 1</span>
+          </div>
+        </div>
+        <div class="time-display" id="timeDisplay"></div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main">
+      <!-- Left Panel: Category Filters + Store List -->
+      <aside id="sidebar">
+        <div class="sidebar-tabs">
+          <button class="tab-btn active" data-tab="categories">Categories</button>
+          <button class="tab-btn" data-tab="floors">Floors</button>
+          <button class="tab-btn" data-tab="favorites">Saved</button>
+        </div>
+
+        <!-- Categories Tab -->
+        <div id="tab-categories" class="tab-content active">
+          <div class="category-grid">
+            <button class="cat-btn active" data-category="all">
+              <span class="cat-icon">🏪</span>
+              <span>All Stores</span>
+            </button>
+            <button class="cat-btn" data-category="fashion">
+              <span class="cat-icon">👗</span>
+              <span>Fashion</span>
+            </button>
+            <button class="cat-btn" data-category="food">
+              <span class="cat-icon">🍽️</span>
+              <span>Food & Dining</span>
+            </button>
+            <button class="cat-btn" data-category="electronics">
+              <span class="cat-icon">💻</span>
+              <span>Electronics</span>
+            </button>
+            <button class="cat-btn" data-category="beauty">
+              <span class="cat-icon">💄</span>
+              <span>Beauty</span>
+            </button>
+            <button class="cat-btn" data-category="sports">
+              <span class="cat-icon">⚽</span>
+              <span>Sports</span>
+            </button>
+            <button class="cat-btn" data-category="home">
+              <span class="cat-icon">🏠</span>
+              <span>Home & Garden</span>
+            </button>
+            <button class="cat-btn" data-category="entertainment">
+              <span class="cat-icon">🎮</span>
+              <span>Entertainment</span>
+            </button>
+            <button class="cat-btn" data-category="services">
+              <span class="cat-icon">🛎️</span>
+              <span>Services</span>
+            </button>
+            <button class="cat-btn" data-category="jewelry">
+              <span class="cat-icon">💍</span>
+              <span>Jewelry</span>
+            </button>
+            <button class="cat-btn" data-category="kids">
+              <span class="cat-icon">🧸</span>
+              <span>Kids</span>
+            </button>
+            <button class="cat-btn" data-category="books">
+              <span class="cat-icon">📚</span>
+              <span>Books & Media</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Floors Tab -->
+        <div id="tab-floors" class="tab-content">
+          <div class="floor-selector">
+            <button class="floor-btn active" data-floor="1">
+              <span class="floor-num">1</span>
+              <div class="floor-info">
+                <span class="floor-name">Ground Floor</span>
+                <span class="floor-desc">Main Entrance · Food Court</span>
+              </div>
+            </button>
+            <button class="floor-btn" data-floor="2">
+              <span class="floor-num">2</span>
+              <div class="floor-info">
+                <span class="floor-name">Level 2</span>
+                <span class="floor-desc">Fashion · Accessories</span>
+              </div>
+            </button>
+            <button class="floor-btn" data-floor="3">
+              <span class="floor-num">3</span>
+              <div class="floor-info">
+                <span class="floor-name">Level 3</span>
+                <span class="floor-desc">Electronics · Entertainment</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div id="tab-favorites" class="tab-content">
+          <div id="favoritesList" class="favorites-list">
+            <div class="empty-state">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              <p>Tap the heart icon on any store to save it here</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Store List -->
+        <div id="storeList" class="store-list"></div>
+      </aside>
+
+      <!-- Center: Map -->
+      <section id="mapSection">
+        <div class="map-toolbar">
+          <div class="floor-indicator">
+            <span>Floor</span>
+            <span id="currentFloorLabel">1</span>
+          </div>
+          <div class="map-controls">
+            <button id="zoomIn" class="map-ctrl-btn" title="Zoom In">+</button>
+            <button id="zoomOut" class="map-ctrl-btn" title="Zoom Out">−</button>
+            <button id="resetView" class="map-ctrl-btn" title="Reset View">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="mapWrapper">
+          <canvas id="mallMap"></canvas>
+          <div id="storeTooltip" class="store-tooltip" style="display:none"></div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Store Detail / Route -->
+      <aside id="detailPanel" class="detail-panel hidden">
+        <button id="closeDetail" class="close-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <div id="detailContent"></div>
+      </aside>
+    </main>
+
+    <!-- Bottom Bar -->
+    <footer id="footer">
+      <div class="footer-info">
+        <div class="footer-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8m-4-4v4"/>
+          </svg>
+          <span>Interactive Kiosk</span>
+        </div>
+        <div class="footer-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Mall Hours: Mon–Sat 10am–9pm · Sun 11am–7pm</span>
+        </div>
+        <div class="footer-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.93h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 18z"/>
+          </svg>
+          <span>Info: (555) 123-4567</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js?v=x9p3q7"></script>
+</body>
+</html>
